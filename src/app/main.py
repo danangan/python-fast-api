@@ -1,9 +1,15 @@
 from fastapi import FastAPI, HTTPException
 import app.utils.helpers as helpers
+from app.settings import settings
 
 items = helpers.create_sample_items()
 
-app = FastAPI()
+# Only serve the API docs in non production environment
+app = FastAPI(
+    docs_url=None if settings.is_production else "/docs",
+    redoc_url=None if settings.is_production else "/redoc",
+    openapi_url=None if settings.is_production else "/openapi.json"
+)
 
 @app.get("/")
 def get_root():
