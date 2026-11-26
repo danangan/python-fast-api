@@ -31,3 +31,33 @@ To run the container:
 ```bash
 podman run -p 8000:8000 fast-api-app:latest
 ```
+
+# Running a PostgreSQL database
+
+A `compose.yaml` file is provided to spin up a local PostgreSQL database. It works with both Docker and Podman.
+
+Via Podman:
+
+```bash
+podman compose up -d
+```
+
+Via Docker:
+
+```bash
+docker compose up -d
+```
+
+By default the database is available at `postgresql://postgres:postgres@localhost:5432/app`. The user, password, database name and host port can be overridden with the `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` and `POSTGRES_PORT` environment variables (or in a `.env` file).
+
+Data is persisted in the `postgres-data` volume. To stop the database:
+
+```bash
+podman compose down      # or: docker compose down
+```
+
+To stop it and remove all data:
+
+```bash
+podman compose down -v   # or: docker compose down -v
+```
